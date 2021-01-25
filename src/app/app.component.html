@@ -1,0 +1,46 @@
+<nz-layout class="layout">
+  <nz-header>
+
+    <nz-row nzJustify="space-between">
+      <nz-col>
+        <img class="logo" src="assets/logo.png" alt="logo" routerLink="/">
+      </nz-col>
+      <nz-col>
+        <ul nz-menu nzTheme="dark" nzMode="horizontal">
+          <li nz-menu-item routerLink="/products" *ngIf="kcService.isProductManager()">Products</li>
+          <li nz-menu-item routerLink="/customers" *ngIf="kcService.isCustomerManager()">Customers</li>
+          <li nz-menu-item routerLink="/bills" *ngIf="kcService.isBillingManager()">Bills</li>
+        </ul>
+      </nz-col>
+      <nz-col>
+        <a [ngStyle]="{color:'white'}" (click)="this.login()" *ngIf="!isAuthenticated;else user">Sign
+          in</a>
+        <ng-template #user>
+          <button nz-button nz-dropdown [ngStyle]="{background:'#001529',color:'white',border:'none'}"
+                  [nzDropdownMenu]="menu4">
+            {{token?.name ? token.name : 'Unknown user'}}
+            <i nz-icon nzType="down"></i>
+          </button>
+          <nz-dropdown-menu #menu4="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item (click)="this.accountManagement()">Account</li>
+              <li nz-menu-item (click)="this.changePassword()">Change Password</li>
+              <li nz-menu-item (click)="this.logout()">Logout</li>
+            </ul>
+          </nz-dropdown-menu>
+        </ng-template>
+
+      </nz-col>
+    </nz-row>
+
+  </nz-header>
+  <nz-content>
+    <nz-breadcrumb [nzAutoGenerate]="true"></nz-breadcrumb>
+
+    <div class="inner-content">
+      <router-outlet>
+      </router-outlet>
+    </div>
+  </nz-content>
+  <nz-footer>ANCBest.py ©2020</nz-footer>
+</nz-layout>
